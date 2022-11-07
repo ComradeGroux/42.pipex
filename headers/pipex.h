@@ -1,25 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_striteri_1arg.c                                 :+:      :+:    :+:   */
+/*   pipex.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: vgroux <vgroux@student.42lausanne.ch>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/11/02 23:40:08 by vgroux            #+#    #+#             */
-/*   Updated: 2022/11/02 23:41:57 by vgroux           ###   ########.fr       */
+/*   Created: 2022/11/07 14:41:26 by vgroux            #+#    #+#             */
+/*   Updated: 2022/11/07 16:38:18 by vgroux           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#ifndef PIPEX_H
+# define PIPEX_H
 
-void	ft_striteri_1char(char *s, void (*f)(char))
-{h
-	size_t	i;
+# include "libft.h"
+# include <unistd.h>
 
-	i = 0;
-	while (s[i] != '\0')
-	{
-		(*f)(&s[i]);
-		i++;
-	}
-}
+# define ERR_INPUT_LESS "Error: Too few argument to pipex.\n"
+# define ERR_INPUT_MUCH "Error: Too many argument to pipex.\n"
+
+int	main(int argc, char **argv);
+int	err_msg(char *err);
+
+#endif
