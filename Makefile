@@ -6,7 +6,7 @@
 #    By: vgroux <vgroux@student.42lausanne.ch>      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/10/31 18:49:40 by vgroux            #+#    #+#              #
-#    Updated: 2022/11/08 15:29:12 by vgroux           ###   ########.fr        #
+#    Updated: 2022/11/08 17:55:40 by vgroux           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -27,7 +27,7 @@ CREATE_DIR_O = @mkdir objs
 DIR_O =	objs/
 
 SRCS_LIST =	main.c \
-			error.c \
+			error.c
 
 SRCS =		${addprefix ${DIR_S}, ${SRCS_LIST}}
 
@@ -44,7 +44,7 @@ LIBS = ${FT_LNK}
 ${NAME}: title ${LIBFT} createobjs ${OBJS}
 	@echo "$(RESET)[$(GREENGREEN)${NAME}$(RESET)]: Pipex Objects were created"
 #	@echo "$(RESET)[$(GREENGREEN)${NAME}$(RESET)]: Link of the Objects${GREY}"
-	${CC} ${LIBS} ${OBJS} -o ${NAME}
+	${CC} ${OBJS} ${LIBS} -o ${NAME}
 	@echo "$(RESET)[$(GREENGREEN)${NAME}$(RESET)]: Pipex created !${GREY}"
 
 
@@ -79,6 +79,7 @@ clean:
 	@echo "$(RED)  ╚═════╝╚══════╝╚══════╝╚═╝  ╚═╝╚═╝  ╚═══╝╚═╝╚═╝  ╚═══╝ ╚═════╝ $(RESET)"
 	@echo "$(RESET)[$(RED)${NAME}$(RESET)]: Clean Pipex Objects...${GREY}"
 	${RM} ${OBJS}
+	@rm -r objs
 	@echo "$(RESET)[$(RED)${NAME}$(RESET)]: Pipex Objects were cleaned"
 
 libclean:
