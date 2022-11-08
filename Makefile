@@ -6,7 +6,7 @@
 #    By: vgroux <vgroux@student.42lausanne.ch>      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/10/31 18:49:40 by vgroux            #+#    #+#              #
-#    Updated: 2022/11/08 12:36:46 by vgroux           ###   ########.fr        #
+#    Updated: 2022/11/08 15:29:12 by vgroux           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -23,6 +23,7 @@ RM =         rm -f
 
 DIR_H = headers/
 DIR_S =	srcs/
+CREATE_DIR_O = @mkdir objs
 DIR_O =	objs/
 
 SRCS_LIST =	main.c \
@@ -57,6 +58,7 @@ title:
 
 createobjs:
 	@echo "[$(GREENGREEN)${NAME}$(RESET)]: Creating Pipex Objects...${GREY}"
+	@mkdir -p ${DIR_O}
 
 ${LIBFT}:
 	@echo "[$(GREENGREEN)${NAME}$(RESET)]: Creating Libft...${GREY}"
