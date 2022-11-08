@@ -6,7 +6,7 @@
 #    By: vgroux <vgroux@student.42lausanne.ch>      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/10/31 18:49:40 by vgroux            #+#    #+#              #
-#    Updated: 2022/11/07 17:18:30 by vgroux           ###   ########.fr        #
+#    Updated: 2022/11/08 12:36:46 by vgroux           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -66,7 +66,7 @@ ${LIBFT}:
 all: ${NAME}
 
 ${DIR_O}%.o:${DIR_S}%.c
-	${CC} ${CFLAGS} -I ${DIR_H} ${LIBFT_INC} -o $@ -c $<
+	${CC} ${CFLAGS} ${LIBFT_INC} -I ${DIR_H} -o $@ -c $<
 
 clean:
 	@echo "$(RED) ██████╗██╗     ███████╗ █████╗ ███╗   ██╗██╗███╗   ██╗ ██████╗$(RESET)"
