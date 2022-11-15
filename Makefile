@@ -6,7 +6,7 @@
 #    By: vgroux <vgroux@student.42lausanne.ch>      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/10/31 18:49:40 by vgroux            #+#    #+#              #
-#    Updated: 2022/11/08 17:55:40 by vgroux           ###   ########.fr        #
+#    Updated: 2022/11/15 18:11:38 by vgroux           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -19,7 +19,7 @@ NAME =     pipex
 
 CC =         gcc
 CFLAGS =     -Wall -Wextra -Werror
-RM =         rm -f
+RM =         rm -rf
 
 DIR_H = headers/
 DIR_S =	srcs/
@@ -27,7 +27,8 @@ CREATE_DIR_O = @mkdir objs
 DIR_O =	objs/
 
 SRCS_LIST =	main.c \
-			error.c
+			error.c \
+			utils.c
 
 SRCS =		${addprefix ${DIR_S}, ${SRCS_LIST}}
 
@@ -78,8 +79,7 @@ clean:
 	@echo "$(RED) ╚██████╗███████╗███████╗██║  ██║██║ ╚████║██║██║ ╚████║╚██████╔╝$(RESET)"
 	@echo "$(RED)  ╚═════╝╚══════╝╚══════╝╚═╝  ╚═╝╚═╝  ╚═══╝╚═╝╚═╝  ╚═══╝ ╚═════╝ $(RESET)"
 	@echo "$(RESET)[$(RED)${NAME}$(RESET)]: Clean Pipex Objects...${GREY}"
-	${RM} ${OBJS}
-	@rm -r objs
+	${RM} ${DIR_O}
 	@echo "$(RESET)[$(RED)${NAME}$(RESET)]: Pipex Objects were cleaned"
 
 libclean:
