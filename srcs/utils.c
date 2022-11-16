@@ -6,7 +6,7 @@
 /*   By: vgroux <vgroux@student.42lausanne.ch>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/14 17:53:07 by vgroux            #+#    #+#             */
-/*   Updated: 2022/11/15 18:36:40 by vgroux           ###   ########.fr       */
+/*   Updated: 2022/11/15 21:38:10 by vgroux           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ char	*find_cmdfile_path(char *cmd, char **envp)
 	int		i;
 
 	i = 0;
-	while (ft_strnstr(envp[i], "PATH=", 5) == NULL)
+	while (envp[i] && ft_strncmp("PATH=", envp[i], 5))
 		i++;
 	paths = ft_split(envp[i] + 5, ':');
 	while (paths[i])
@@ -37,6 +37,7 @@ char	*find_cmdfile_path(char *cmd, char **envp)
 	while (paths[i])
 		free(paths[i++]);
 	free(paths);
+	err_custom(ERR_CMD_NF);
 	return (NULL);
 }
 
