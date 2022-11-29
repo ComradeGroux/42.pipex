@@ -3,4 +3,3 @@ a.out
 *.o
 .DS_Store
 test.c
-OLD/*

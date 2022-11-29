@@ -6,40 +6,11 @@
 /*   By: vgroux <vgroux@student.42lausanne.ch>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/14 17:53:07 by vgroux            #+#    #+#             */
-/*   Updated: 2022/11/15 21:38:10 by vgroux           ###   ########.fr       */
+/*   Updated: 2022/11/22 17:37:05 by vgroux           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pipex.h"
-
-char	*find_cmdfile_path(char *cmd, char **envp)
-{
-	char	**paths;
-	char	*path;
-	char	*path_tmp;
-	int		i;
-
-	i = 0;
-	while (envp[i] && ft_strncmp("PATH=", envp[i], 5))
-		i++;
-	paths = ft_split(envp[i] + 5, ':');
-	while (paths[i])
-	{
-		path_tmp = ft_strjoin(paths[i], "/");
-		path = ft_strjoin(path_tmp, cmd);
-		free(path_tmp);
-		if (access(path, F_OK) == 0)
-			return (path);
-		free(path);
-		i++;
-	}
-	i = 0;
-	while (paths[i])
-		free(paths[i++]);
-	free(paths);
-	err_custom(ERR_CMD_NF);
-	return (NULL);
-}
 
 void	exe_cmd(char *argv_cmd, char **envp)
 {
@@ -48,15 +19,26 @@ void	exe_cmd(char *argv_cmd, char **envp)
 	int		i;
 
 	i = 0;
-	cmd = ft_split(argv_cmd, ' ');
-	path = find_cmdfile_path(cmd[0], envp);
-	if (!path)
+	if (argv_cmd)
 	{
+		cmd = ft_split(argv_cmd, ' ');
+		if (!ft_strchr(cmd[0], '/'))
+		{
+			path = get_path(cmd[0], envp);
+			execve(path, cmd, envp);
+			err(cmd[0], "command not found");
+		}
+		else
+		{
+			path = cmd[0];
+			if (access(path, X_OK))
+				err(path, strerror(errno));
+			else
+				execve(path, cmd, envp);
+		}
 		while (cmd[i])
 			free(cmd[i++]);
 		free(cmd);
-		err();
 	}
-	else if (execve(path, cmd, envp) == -1)
-		err();
+	exit(0);
 }
