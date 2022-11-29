@@ -6,7 +6,7 @@
 #    By: vgroux <vgroux@student.42lausanne.ch>      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/10/31 18:49:40 by vgroux            #+#    #+#              #
-#    Updated: 2022/11/15 18:11:38 by vgroux           ###   ########.fr        #
+#    Updated: 2022/11/29 18:30:26 by vgroux           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -27,8 +27,7 @@ CREATE_DIR_O = @mkdir objs
 DIR_O =	objs/
 
 SRCS_LIST =	main.c \
-			error.c \
-			utils.c
+			path.c
 
 SRCS =		${addprefix ${DIR_S}, ${SRCS_LIST}}
 
