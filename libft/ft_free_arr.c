@@ -1,20 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   ft_free_arr.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: vgroux <vgroux@student.42lausanne.ch>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/11/29 18:08:19 by vgroux            #+#    #+#             */
-/*   Updated: 2022/11/30 17:31:01 by vgroux           ###   ########.fr       */
+/*   Created: 2022/11/30 18:02:40 by vgroux            #+#    #+#             */
+/*   Updated: 2022/11/30 18:02:58 by vgroux           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "pipex.h"
+#include "libft.h"
 
-int	main(int argc, char **argv, char **envp)
+char	**ft_free_arr(char **strs)
 {
-	(void)argc;
-	(void)argv;
-	(void)envp;
+	int	i;
+
+	i = 0;
+	while (strs[i] != NULL)
+	{
+		free(strs[i]);
+		i++;
+	}
+	free(strs[i]);
+	free(strs);
+	return (NULL);
 }

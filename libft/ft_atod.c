@@ -1,39 +1,41 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_atoi.c                                          :+:      :+:    :+:   */
+/*   ft_atod.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: vgroux <vgroux@student.42lausanne.ch>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/09/25 12:53:14 by vgroux            #+#    #+#             */
-/*   Updated: 2022/11/24 16:16:47 by vgroux           ###   ########.fr       */
+/*   Created: 2022/11/24 15:55:26 by vgroux            #+#    #+#             */
+/*   Updated: 2022/11/24 19:18:47 by vgroux           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-int	ft_atoi(const char *str)
+double	ft_atod(const char *str)
 {
-	int	i;
-	int	nb;
-	int	sign;
+	int		i;
+	double	j;
+	double	sum;
+	double	temp;
 
 	i = 0;
-	nb = 0;
-	sign = 1;
-	while (ft_isspace(str[i]))
-		i++;
-	if (str[i] == '-')
-	{
-		sign = sign * -1;
-		i++;
-	}
+	j = 1;
+	temp = 0.1;
+	if (str[i] == '-' && str[i++] == '-')
+		j = -1;
 	else if (str[i] == '+')
 		i++;
-	while (ft_isdigit(str[i]) && str[i] != '\0')
+	sum = 0.0;
+	while (str[i] > 47 && str[i] < 58 && str[i] != '.')
+		sum = (sum * 10) + (str[i++] - 48);
+	if (str[i] == '.')
+		i++;
+	while (str[i] > 47 && str[i] < 58)
 	{
-		nb = (nb * 10) + (str[i] - '0');
+		sum += ((str[i] - 48) * temp);
+		temp /= 10;
 		i++;
 	}
-	return (nb * sign);
+	return (sum * j);
 }

@@ -6,7 +6,7 @@
 /*   By: vgroux <vgroux@student.42lausanne.ch>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/14 15:35:30 by vgroux            #+#    #+#             */
-/*   Updated: 2022/10/17 17:42:46 by vgroux           ###   ########.fr       */
+/*   Updated: 2022/11/30 18:04:32 by vgroux           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,21 +50,6 @@ static char	*ft_dup_word(const char *s, size_t start, size_t end)
 	}
 	word[i] = '\0';
 	return (word);
-}
-
-static char	**ft_free_arr(char **strs)
-{
-	int	i;
-
-	i = 0;
-	while (strs[i] != NULL)
-	{
-		free(strs[i]);
-		i++;
-	}
-	free(strs[i]);
-	free(strs);
-	return (NULL);
 }
 
 char	**ft_split(const char *s, char c)

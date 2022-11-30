@@ -6,7 +6,7 @@
 #    By: vgroux <vgroux@student.42lausanne.ch>      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/10/31 18:49:40 by vgroux            #+#    #+#              #
-#    Updated: 2022/11/29 18:30:26 by vgroux           ###   ########.fr        #
+#    Updated: 2022/11/30 17:24:11 by vgroux           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -23,7 +23,6 @@ RM =         rm -rf
 
 DIR_H = headers/
 DIR_S =	srcs/
-CREATE_DIR_O = @mkdir objs
 DIR_O =	objs/
 
 SRCS_LIST =	main.c \

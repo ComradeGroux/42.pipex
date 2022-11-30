@@ -1,20 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   ft_strtocase.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: vgroux <vgroux@student.42lausanne.ch>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/11/29 18:08:19 by vgroux            #+#    #+#             */
-/*   Updated: 2022/11/30 17:31:01 by vgroux           ###   ########.fr       */
+/*   Created: 2022/11/02 23:55:09 by vgroux            #+#    #+#             */
+/*   Updated: 2022/11/03 00:02:58 by vgroux           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "pipex.h"
+#include "libft.h"
 
-int	main(int argc, char **argv, char **envp)
+char	*ft_strtocase(char *s, int (*f)(int))
 {
-	(void)argc;
-	(void)argv;
-	(void)envp;
+	size_t	i;
+
+	i = 0;
+	while (s[i])
+	{
+		s[i] = f(s[i]);
+		i++;
+	}
+	return (s);
 }
