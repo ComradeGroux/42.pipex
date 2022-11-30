@@ -6,11 +6,30 @@
 /*   By: vgroux <vgroux@student.42lausanne.ch>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/29 18:22:10 by vgroux            #+#    #+#             */
-/*   Updated: 2022/11/30 18:02:26 by vgroux           ###   ########.fr       */
+/*   Updated: 2022/11/30 19:00:52 by vgroux           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pipex.h"
+
+char	*get_path(char **cmd, char **envp)
+{
+	char	**possible_paths;
+	int		i;
+
+	i = 0;
+	possible_paths = get_possible_paths(envp);
+	while (possible_paths[i])
+	{
+		possible_paths[i] = parse_path(possible_paths[i], cmd[0]);
+		if (!possible_paths[i])
+			return (ft_free_arr(possible_paths)[0]);
+		if (!access(possible_paths[i], F_OK))
+			return (possible_paths[i]);
+		i++;
+	}
+	return (ft_free_arr(possible_paths)[0]);
+}
 
 char	**get_possible_paths(char **envp)
 {
@@ -22,53 +41,24 @@ char	**get_possible_paths(char **envp)
 	return (ft_split(envp[i] + 5, ':'));
 }
 
-char	*get_path(char *cmd, char **envp)
-{
-	char	**possible_paths;
-	char	*tmp;
-	int		i;
-
-	i = 0;
-	possible_paths = get_possible_paths(envp);
-	while (possible_paths[i])
-	{
-		tmp = ft_strjoin(possible_paths[i], cmd);
-		if (!tmp)
-			return (NULL);
-	}
-	return (possible_paths[1]);
-}
-
-static char	**ft_free_arr(char **strs)
-{
-	int	i;
-
-	i = 0;
-	while (strs[i] != NULL)
-	{
-		free(strs[i]);
-		i++;
-	}
-	free(strs[i]);
-	free(strs);
-	return (NULL);
-}
-
-char	**parse_paths(char **possibles_paths, char *cmd)
+char	*parse_path(char *path, char *cmd)
 {
 	int		i;
-	int		j;
-	char	**new_paths;
+	char	*new_path;
 
 	i = 0;
-	j = 0;
-	while (possibles_paths[i])
+	new_path = calloc(ft_strlen(path) + 2, sizeof(char));
+	if (!new_path)
 	{
-		while (possibles_paths[i][j])
-			j++;
-		new_paths[i] = ft_calloc(j, sizeof(char));
-		if (!new_paths[i])
-			ft_free_arr(new_paths);
+		free(path);
+		return (NULL);
+	}
+	while (path[i])
+	{
+		new_path[i] = path[i];
 		i++;
 	}
+	new_path[i] = '/';
+	new_path = ft_gnl_strjoin(new_path, cmd);
+	return (new_path);
 }

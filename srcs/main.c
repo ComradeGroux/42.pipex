@@ -6,7 +6,7 @@
 /*   By: vgroux <vgroux@student.42lausanne.ch>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/29 18:08:19 by vgroux            #+#    #+#             */
-/*   Updated: 2022/11/30 17:31:01 by vgroux           ###   ########.fr       */
+/*   Updated: 2022/11/30 18:58:30 by vgroux           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,5 @@
 int	main(int argc, char **argv, char **envp)
 {
 	(void)argc;
-	(void)argv;
-	(void)envp;
+	get_path(ft_split(argv[1], ' '), envp);
 }
