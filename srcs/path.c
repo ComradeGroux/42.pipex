@@ -6,13 +6,13 @@
 /*   By: vgroux <vgroux@student.42lausanne.ch>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/29 18:22:10 by vgroux            #+#    #+#             */
-/*   Updated: 2022/11/30 19:00:52 by vgroux           ###   ########.fr       */
+/*   Updated: 2022/12/01 18:38:37 by vgroux           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pipex.h"
 
-char	*get_path(char **cmd, char **envp)
+char	*get_path(char *cmd, char **envp)
 {
 	char	**possible_paths;
 	int		i;
@@ -21,7 +21,7 @@ char	*get_path(char **cmd, char **envp)
 	possible_paths = get_possible_paths(envp);
 	while (possible_paths[i])
 	{
-		possible_paths[i] = parse_path(possible_paths[i], cmd[0]);
+		possible_paths[i] = parse_path(possible_paths[i], cmd);
 		if (!possible_paths[i])
 			return (ft_free_arr(possible_paths)[0]);
 		if (!access(possible_paths[i], F_OK))
