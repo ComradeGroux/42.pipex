@@ -6,7 +6,7 @@
 #    By: vgroux <vgroux@student.42lausanne.ch>      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/10/31 18:49:40 by vgroux            #+#    #+#              #
-#    Updated: 2022/12/06 15:48:03 by vgroux           ###   ########.fr        #
+#    Updated: 2022/12/06 19:29:06 by vgroux           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -40,12 +40,11 @@ FT_LNK = -L ${DIR_LIBFT} -l ft
 
 LIBS = ${FT_LNK}
 
-${NAME}: title ${LIBFT} createobjs ${OBJS}
-	@echo "$(RESET)[$(GREENGREEN)${NAME}$(RESET)]: Pipex Objects were created"
-#	@echo "$(RESET)[$(GREENGREEN)${NAME}$(RESET)]: Link of the Objects${GREY}"
+# ${NAME}: title ${LIBFT} ${OBJS}
+${NAME}: ${LIBFT} ${OBJS}
+	@echo "$(RESET)[$(GREENGREEN)${NAME}$(RESET)]: Pipex Objects were created${GREY}"
 	${CC} ${OBJS} ${LIBS} -o ${NAME}
-	@echo "$(RESET)[$(GREENGREEN)${NAME}$(RESET)]: Pipex created !${GREY}"
-
+	@echo "$(RESET)[$(GREENGREEN)${NAME}$(RESET)]: Pipex created !"
 
 title:
 	@echo "$(GREENGREEN)██████╗ ██╗██████╗ ███████╗██╗  ██╗\n\
@@ -55,18 +54,17 @@ title:
 ██║     ██║██║     ███████╗██╔╝ ██╗\n\
 ╚═╝     ╚═╝╚═╝     ╚══════╝╚═╝  ╚═╝${RESET}"
 
-createobjs:
-	@echo "[$(GREENGREEN)${NAME}$(RESET)]: Creating Pipex Objects...${GREY}"
-	@mkdir -p ${DIR_O}
-
 ${LIBFT}:
 	@echo "[$(GREENGREEN)${NAME}$(RESET)]: Creating Libft...${GREY}"
 	${MAKE} -C ${@D}
 	@echo "$(RESET)[$(GREENGREEN)${NAME}$(RESET)]: Libft Objects were created"
+	@echo "${RESET}[$(GREENGREEN)${NAME}$(RESET)]: Creating Pipex Objects...${GREY}"
 
 all: ${NAME}
 
-${DIR_O}%.o:${DIR_S}%.c
+${DIR_O}%.o: ${DIR_S}%.c
+	@printf "\033[38;5;240m"
+	@mkdir -p ${DIR_O}
 	${CC} ${CFLAGS} ${LIBFT_INC} -I ${DIR_H} -o $@ -c $<
 
 clean:
@@ -76,20 +74,21 @@ clean:
 	@echo "$(RED) ██║     ██║     ██╔══╝  ██╔══██║██║╚██╗██║██║██║╚██╗██║██║   ██║$(RESET)"
 	@echo "$(RED) ╚██████╗███████╗███████╗██║  ██║██║ ╚████║██║██║ ╚████║╚██████╔╝$(RESET)"
 	@echo "$(RED)  ╚═════╝╚══════╝╚══════╝╚═╝  ╚═╝╚═╝  ╚═══╝╚═╝╚═╝  ╚═══╝ ╚═════╝ $(RESET)"
-	@echo "$(RESET)[$(RED)${NAME}$(RESET)]: Clean Pipex Objects...${GREY}"
+	@echo "$(RESET)[$(RED)${NAME}$(RESET)]: Cleaning Pipex Objects...${GREY}"
+	${RM} ${OBJS}
 	${RM} ${DIR_O}
 	@echo "$(RESET)[$(RED)${NAME}$(RESET)]: Pipex Objects were cleaned"
 
 libclean:
-	@echo "$(RESET)[$(RED)${NAME}$(RESET)]: Clean libft...${GREY}"
+	@echo "$(RESET)[$(RED)${NAME}$(RESET)]: Cleaning Libft...${GREY}"
 	${MAKE} -C ${DIR_LIBFT} fclean
 	@echo "$(RESET)[$(RED)${NAME}$(RESET)]: Libft were cleaned"
 
 fclean: clean libclean
-	@echo "$(RESET)[$(RED)${NAME}$(RESET)]: Clean Pipex...${GREY}"
+	@echo "$(RESET)[$(RED)${NAME}$(RESET)]: Cleaning Pipex...${GREY}"
 	${RM} ${NAME}
-	@echo "$(RESET)[$(RED)${NAME}$(RESET)]: Pipex was cleaned...${GREY}"
+	@echo "$(RESET)[$(RED)${NAME}$(RESET)]: Pipex was cleaned"
 
 re: fclean all
 
-.PHONY: all clean fclean re
+.PHONY: all clean fclean re libclean title
