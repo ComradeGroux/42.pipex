@@ -6,7 +6,7 @@
 /*   By: vgroux <vgroux@student.42lausanne.ch>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/29 18:22:10 by vgroux            #+#    #+#             */
-/*   Updated: 2022/12/01 18:38:37 by vgroux           ###   ########.fr       */
+/*   Updated: 2022/12/06 15:41:05 by vgroux           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,12 +23,12 @@ char	*get_path(char *cmd, char **envp)
 	{
 		possible_paths[i] = parse_path(possible_paths[i], cmd);
 		if (!possible_paths[i])
-			return (ft_free_arr(possible_paths)[0]);
+			return (free_arr(possible_paths));
 		if (!access(possible_paths[i], F_OK))
 			return (possible_paths[i]);
 		i++;
 	}
-	return (ft_free_arr(possible_paths)[0]);
+	return (free_arr(possible_paths));
 }
 
 char	**get_possible_paths(char **envp)
@@ -61,4 +61,16 @@ char	*parse_path(char *path, char *cmd)
 	new_path[i] = '/';
 	new_path = ft_gnl_strjoin(new_path, cmd);
 	return (new_path);
+}
+
+char	*free_arr(char **arr)
+{
+	int	i;
+
+	i = 0;
+	while (arr[i] != NULL)
+		free(arr[i++]);
+	free(arr[i]);
+	free(arr);
+	return (NULL);
 }

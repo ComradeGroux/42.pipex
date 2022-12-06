@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vgroux <vgroux@student.42.fr>              +#+  +:+       +#+        */
+/*   By: vgroux <vgroux@student.42lausanne.ch>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/29 18:08:19 by vgroux            #+#    #+#             */
-/*   Updated: 2022/12/06 12:13:29 by vgroux           ###   ########.fr       */
+/*   Updated: 2022/12/06 17:44:33 by vgroux           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,18 +25,33 @@ int	main(int argc, char **argv, char **envp)
 		if (pid == 0)
 			child_process(fd, argv, envp);
 		else
-			parent_process(pid, fd, argv, envp);
+			parent_process(fd, argv, envp);
 	}
-	return (1);
+	else
+	{
+		return (1);
+	}
+	close(fd[0]);
+	close(fd[1]);
+	return (0);
 }
 
 void	execute(t_cmd *cmd, char **envp)
 {
-	if (ft_strchr(cmd->arg[0], '/'))
-		cmd->path = cmd->arg[0];
-	if (!access(cmd->path, X_OK))
-		execve(cmd->path, cmd->arg, envp);
-	perror("");
+	if (cmd->path != NULL)
+	{
+		if (ft_strchr(cmd->arg[0], '/'))
+			cmd->path = cmd->arg[0];
+		if (access(cmd->path, X_OK) == 0)
+		{
+			if (execve(cmd->path, cmd->arg, envp) == -1)
+				perror(NULL);
+		}
+		else
+			perror(NULL);
+	}
+	else
+		perror("command not found");
 }
 
 void	prepare_cmd(t_cmd	*cmd, int fd, char *arg, char **envp)
@@ -59,25 +74,26 @@ void	child_process(int fd[], char **argv, char **envp)
 		return ;
 	}
 	dup2(cmd.fd, STDIN_FILENO);
-	close(fd[0]);
 	dup2(fd[1], STDOUT_FILENO);
+	close(fd[0]);
+	close(fd[1]);
 	execute(&cmd, envp);
 }
 
-void	parent_process(int pid, int fd[], char **argv, char **envp)
+void	parent_process(int fd[], char **argv, char **envp)
 {
 	t_cmd	cmd;
 
 	prepare_cmd(&cmd, 0, argv[3], envp);
-	cmd.fd = open(argv[4], O_CREAT | O_TRUNC | O_WRONLY);
+	cmd.fd = open(argv[4], O_CREAT | O_TRUNC | O_WRONLY, 0000644);
 	if (cmd.fd == -1)
 	{
 		perror(argv[4]);
 		exit(127);
 	}
-	dup2(cmd.fd, STDOUT_FILENO);
-	close(fd[1]);
 	dup2(fd[0], STDIN_FILENO);
-	waitpid(pid, NULL, 0);
+	dup2(cmd.fd, STDOUT_FILENO);
+	close(fd[0]);
+	close(fd[1]);
 	execute(&cmd, envp);
 }
