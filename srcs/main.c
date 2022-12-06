@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vgroux <vgroux@student.42lausanne.ch>      +#+  +:+       +#+        */
+/*   By: vgroux <vgroux@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/29 18:08:19 by vgroux            #+#    #+#             */
-/*   Updated: 2022/12/01 18:37:57 by vgroux           ###   ########.fr       */
+/*   Updated: 2022/12/06 12:13:29 by vgroux           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,8 +32,11 @@ int	main(int argc, char **argv, char **envp)
 
 void	execute(t_cmd *cmd, char **envp)
 {
-	if (!access(cmd->path, R_OK))
+	if (ft_strchr(cmd->arg[0], '/'))
+		cmd->path = cmd->arg[0];
+	if (!access(cmd->path, X_OK))
 		execve(cmd->path, cmd->arg, envp);
+	perror("");
 }
 
 void	prepare_cmd(t_cmd	*cmd, int fd, char *arg, char **envp)
@@ -53,7 +56,7 @@ void	child_process(int fd[], char **argv, char **envp)
 	if (cmd.fd == -1)
 	{
 		perror(argv[1]);
-		exit(127);
+		return ;
 	}
 	dup2(cmd.fd, STDIN_FILENO);
 	close(fd[0]);
@@ -70,6 +73,7 @@ void	parent_process(int pid, int fd[], char **argv, char **envp)
 	if (cmd.fd == -1)
 	{
 		perror(argv[4]);
+		exit(127);
 	}
 	dup2(cmd.fd, STDOUT_FILENO);
 	close(fd[1]);
