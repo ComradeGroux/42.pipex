@@ -6,7 +6,7 @@
 /*   By: vgroux <vgroux@student.42lausanne.ch>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/29 18:22:10 by vgroux            #+#    #+#             */
-/*   Updated: 2022/12/06 15:41:05 by vgroux           ###   ########.fr       */
+/*   Updated: 2022/12/08 15:53:07 by vgroux           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ char	*parse_path(char *path, char *cmd)
 	char	*new_path;
 
 	i = 0;
-	new_path = calloc(ft_strlen(path) + 2, sizeof(char));
+	new_path = ft_calloc(ft_strlen(path) + 2, sizeof(char));
 	if (!new_path)
 	{
 		free(path);
